@@ -21,7 +21,8 @@
             position: absolute;
             max-height: 20rem;
             max-width: 20rem;
-            bottom: -20%;
+            left: 9%;
+            bottom: 35%;
         }
     </style>
     <title>Control de Lotería</title>
@@ -44,52 +45,59 @@
     </div>
 
     <!-- Card Formulario -->
-    <div class="card">
-        <h5 class="card-header info-color white-text text-center py-4">
-            <strong>Crear Carta</strong>
-        </h5>
-        <!--Card content-->
-        <div class="card-body px-lg-5 pt-0">
-            <!-- Form -->
-            <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="inputNombre" placeholder="Nombre de Carta" required>
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Crear Carta</strong>
+                </h5>
+                <!--Card content-->
+                <div class="card-body px-lg-5 pt-0">
+                    <!-- Form -->
+                    <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre de Carta"
+                                required>
+                        </div>
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="inputImg" accept="image/*" required>
+                            <label class="custom-file-label" for="inputImg">Escoger img...</label>
+                            <div class="invalid-feedback">Tiene que ser una imagen</div>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radioMazoNuevo" value="nuevo" name="radioMazo"
+                                class="custom-control-input" checked>
+                            <label class="custom-control-label" for="radioMazoNuevo">Nuevo Mazo</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radioMazoExistente" value="existente" name="radioMazo"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="radioMazoExistente">Mazo Existente</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inputNombreMazo" class="form-control" placeholder="Nombre de Mazo">
+                        </div>
+                        <div class="form-group">
+                            <select id="opcionesMazo" class="form-control"></select>
+                        </div>
+                        <!-- Sign in button -->
+                        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+                            type="submit">Crear</button>
+                    </form>
+                    <!-- Form -->
                 </div>
-                <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="inputImg" accept="image/*" required>
-                    <label class="custom-file-label" for="inputImg">Escoger img...</label>
-                    <div class="invalid-feedback">Tiene que ser una imagen</div>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioMazoNuevo" value="nuevo" name="radioMazo" class="custom-control-input"
-                        checked>
-                    <label class="custom-control-label" for="radioMazoNuevo">Nuevo Mazo</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioMazoExistente" value="existente" name="radioMazo"
-                        class="custom-control-input">
-                    <label class="custom-control-label" for="radioMazoExistente">Mazo Existente</label>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="inputNombreMazo" class="form-control" placeholder="Nombre de Mazo">
-                </div>
-                <div class="form-group">
-                    <select id="opcionesMazo" class="form-control"></select>
-                </div>
-                <!-- Sign in button -->
-                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-                    type="submit">Crear</button>
-            </form>
-            <!-- Form -->
-        </div>
-    </div>
-    <!-- Card Formulario -->
+            </div>
+            <!-- Card Formulario -->
 
-    <!-- Img Naipe-->
-    <div class="row justify-content-center mt-5 mb-5 mr-5 ml-5">
-        <img src="assets/cuerpo_tarjeta.png" class="img-fluid naipe-fondo" alt="">
-        <img src="" class="img-fluid naipe-imagen" id="img-naipe" alt="">
+            <!-- Img Naipe-->
+            <div class="col-sm">
+                <img src="assets/cuerpo_tarjeta.png" class="img-fluid naipe-fondo" alt="">
+                <img src="" class="img-fluid naipe-imagen" id="img-naipe" alt="">
+            </div>
+        </div>
+        <!-- Row-->
     </div>
+    <!-- Container-->
 
     <!-- JavaScript -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
