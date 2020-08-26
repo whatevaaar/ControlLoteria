@@ -22,7 +22,7 @@ const nombreInput = document.getElementById('inputNombre');
 const inputNombreMazo = document.getElementById("inputNombreMazo");
 const inputImg = document.getElementById("inputImg");
 const selectBox = document.getElementById("opcionesMazo");
-const imgNaipe = document.getElementById("img-naipe");
+const imgNaipe = document.getElementById("imgNaipe");
 
 //Referencia de almacenaje para las imágnes en firebase
 const refernciaAlmacenaje = firebase.storage().ref();
