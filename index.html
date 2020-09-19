@@ -9,11 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Tempus -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/c0d1bc6122.js"></script>
     <!-- CSS -->
@@ -24,8 +19,6 @@
             background-size: contain;
             background-repeat: no-repeat;
         }
-
-        .naipe-imagen {}
 
         body {
             background-color: #43C9FD;
@@ -53,14 +46,13 @@
     <!-- Card Formulario -->
     <div class="container-fluid">
         <div class="row mt-5">
-
             <div class="col d-flex justify-content-center">
                 <div class="card h-100 ">
                     <h5 class="card-header info-color white-text text-center py-4">
                         <strong>Crear Carta</strong>
                     </h5>
                     <!--Card content-->
-                    <div class="card-body px-lg-5 pt-0">
+                    <div class="card-body ">
                         <!-- Form -->
                         <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
                             <div class="form-group">
@@ -95,6 +87,21 @@
                         </form>
                         <!-- Form -->
                     </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" id="boton-iniciar" class="btn btn-success btn-lg">Iniciar
+                                    Juego</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" id="boton-siguiente" disabled class="btn btn-info btn-lg">Siguiente Carta</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" id="boton-terminar" class="btn btn-danger btn-lg">Terminar
+                                    Juego</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Card Formulario -->
@@ -109,49 +116,6 @@
         <!-- Row-->
         <div class="row mt-5">
 
-            <div class="col">
-                <div class="card">
-                    <h5 class="card-header info-color white-text text-center py-4">
-                        <strong>Programar Juego</strong>
-                    </h5>
-                    <!--Card content-->
-                    <div class="card-body px-lg-5 pt-0">
-                        <!-- Form -->
-                        <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre de Carta"
-                                    required>
-                            </div>
-                            <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="inputImg" accept="image/*" required>
-                                <label class="custom-file-label" for="inputImg">Escoger img...</label>
-                                <div class="invalid-feedback">Tiene que ser una imagen</div>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="radioMazoNuevo" value="nuevo" name="radioMazo"
-                                    class="custom-control-input" checked>
-                                <label class="custom-control-label" for="radioMazoNuevo">Nuevo Mazo</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="radioMazoExistente" value="existente" name="radioMazo"
-                                    class="custom-control-input">
-                                <label class="custom-control-label" for="radioMazoExistente">Mazo Existente</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="inputNombreMazo" class="form-control"
-                                    placeholder="Nombre de Mazo">
-                            </div>
-                            <div class="form-group">
-                                <select id="opcionesMazo" class="form-control"></select>
-                            </div>
-                            <!-- Sign in button -->
-                            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-                                type="submit">Crear</button>
-                        </form>
-                        <!-- Form -->
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- Container-->
 
@@ -170,10 +134,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
             crossorigin="anonymous"></script>
-        <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <!-- My script -->
-
         <script src="assets/scripts.js" type="text/javascript"></script>
+</body>
 
 </html>

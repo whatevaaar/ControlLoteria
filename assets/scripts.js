@@ -1,4 +1,18 @@
 "use strict";
+//Modelo
+class Carta {
+    constructor(nombre, url) {
+        this.nombre = nombre;
+        this.url = url;
+    }
+}
+
+//Cartas en juego
+var listaDeCartas = [];
+//Id del juego actual
+var idJuego = "";
+//Index de cartas jugadas
+var indexCartas = 0
 
 //Acceso a Firebase
 var firebaseConfig = {
@@ -21,17 +35,15 @@ const radioMazoExistente = document.getElementById("radioMazoExistente");
 const nombreInput = document.getElementById('inputNombre');
 const inputNombreMazo = document.getElementById("inputNombreMazo");
 const inputImg = document.getElementById("inputImg");
-const selectBox = document.getElementById("opcionesMazo");
 const imgNaipe = document.getElementById("imgNaipe");
-
+const selectBox = document.getElementById("opcionesMazo");
+const botonSiguiente = document.getElementById("boton-siguiente");
 //Referencia de almacenaje para las imágnes en firebase
 const refernciaAlmacenaje = firebase.storage().ref();
 
 function conseguirMazos() {
-    let selectBox = document.getElementById("opcionesMazo");
     firebase.database().ref("mazos").on("value", snap => {
         snap.forEach(element => {
-            let dato = element.val();
             let opt = document.createElement('option');
             opt.value = element.key;
             opt.innerHTML = element.key;
@@ -75,9 +87,6 @@ function subirCarta() {
         }, function () {
             // Upload completed successfully, now we can get the download URL
             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-                console.log('File available at', downloadURL);
-
-
                 firebase.database().ref('mazos/' + nombreMazo + '/' + nombre).set({
                     nombre: nombre,
                     url: downloadURL
@@ -94,12 +103,71 @@ function subirCarta() {
 
 }
 
+function iniciarJuego() {
+    idJuego = firebase.database().ref().child('juegos').push().key;
+    let mazo = selectBox.value;
+    firebase.database().ref('juegos/' + idJuego).set({
+        activo: true,
+        mazo: mazo,
+        key: idJuego
+    }, function (error) {
+        if (error)
+            mostrarAlertaError();
+        else {
+            mostrarAlertaExito();
+            botonSiguiente.disabled = false
+            limpiarFormulario();
+            conseguirCartas(mazo);
+        }
+    });
+}
+
+function conseguirCartas(mazo) {
+    firebase.database().ref("mazos/" + mazo).on("value", snap => {
+        snap.forEach(element => {
+            let child = element.val();
+            let nombre = child.nombre;
+            let url = child.url;
+            listaDeCartas.push(new Carta(nombre, url));
+        });
+        shuffle(listaDeCartas);
+        siguienteCarta();
+    });
+}
+
+function siguienteCarta() {
+    let updates = {};
+    imgNaipe.src = listaDeCartas[indexCartas].url;
+    updates['juegos/' + idJuego + '/carta-activa'] = listaDeCartas[indexCartas++];
+    return firebase.database().ref().update(updates);
+}
+
+function terminarJuego() {
+    let updates = {};
+    updates['juegos/' + idJuego + '/activo'] = false;
+    return firebase.database().ref().update(updates);
+}
 
 function limpiarFormulario() {
     inputNombre.value = "";
     inputNombreMazo.value = "";
 }
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
 
 //Alertas
 function mostrarAlertaExito() {
@@ -123,7 +191,7 @@ $(document).ready(function () {
     conseguirMazos();
     selectBox.disabled = true;
 });
-//Listener
+//Listener Radios
 $('input[type=radio][name=radioMazo]').change(function () {
     selectBox.disabled = !(this.value == 'existente');
     inputNombreMazo.disabled = !(this.value == 'nuevo');
@@ -134,10 +202,10 @@ $('input[type="file"]').change(function (e) {
     $('.custom-file-label').html(fileName);
 });
 
+//Listener Img
 inputImg.onchange = function (evt) {
     var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
-
     // FileReader support
     if (FileReader && files && files.length) {
         var fr = new FileReader();
@@ -146,7 +214,11 @@ inputImg.onchange = function (evt) {
         }
         fr.readAsDataURL(files[0]);
     }
-
     // Not supported
     else console.log("e");
 }
+
+//Listener botones
+$("#boton-iniciar").click(iniciarJuego);
+$("#boton-terminar").click(terminarJuego);
+$("#boton-siguiente").click(siguienteCarta);
