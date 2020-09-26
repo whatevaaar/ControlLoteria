@@ -7,12 +7,10 @@ class Carta {
     }
 }
 
-//Cartas en juego
 var listaDeCartas = [];
-//Id del juego actual
 var idJuego = "";
-//Index de cartas jugadas
 var indexCartas = 0
+const HISTORICO_MAX = 4
 
 //Acceso a Firebase
 var firebaseConfig = {
@@ -28,7 +26,8 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
+reconectarJuego();
+conseguirHistorico();
 //Bindings
 const radioMazoNuevo = document.getElementById("radioMazoNuevo");
 const radioMazoExistente = document.getElementById("radioMazoExistente");
@@ -36,25 +35,68 @@ const nombreInput = document.getElementById('inputNombre');
 const inputNombreMazo = document.getElementById("inputNombreMazo");
 const inputImg = document.getElementById("inputImg");
 const imgNaipe = document.getElementById("imgNaipe");
-const selectBox = document.getElementById("opcionesMazo");
+const selectBoxCrearCarta = document.getElementById("opcionesMazo");
+const selectBoxIniciarJuego = document.getElementById("opcionesMazoIniciar");
+const selectBoxHistorico = document.getElementById("opcionesHistorico");
 const botonSiguiente = document.getElementById("boton-siguiente");
+const botonIniciar = document.getElementById("boton-iniciar");
+const botonTerminar = document.getElementById("boton-terminar");
 //Referencia de almacenaje para las imágnes en firebase
 const refernciaAlmacenaje = firebase.storage().ref();
 
+function reconectarJuego() {
+    let conexion = firebase.database().ref('/juegos/').orderByChild("activo").equalTo(true)
+    conexion.once('value', function (snapshot) {
+        snapshot.forEach(element => {
+            let child = element.val();
+            idJuego = child.key;
+            let mazo = child.mazo
+            cambiarUIJuegoEnProceso();
+            conseguirCartas(mazo);
+        });
+    });
+}
+
+function conseguirHistorico(){
+    let conexion = firebase.database().ref('/juegos/').limitToLast(HISTORICO_MAX)
+    conexion.once('value', function (snapshot) {
+        snapshot.forEach(element => {
+            let data = element.val();
+            let opt = document.createElement('option');
+            opt.value = element.key;
+            opt.innerHTML = data.fecha;
+            selectBoxHistorico.appendChild(opt);
+        });
+    });
+}
+
+function cambiarUIJuegoEnProceso() {
+    botonSiguiente.disabled = false
+    botonTerminar.disabled = false
+    botonIniciar.disabled = true
+    selectBoxIniciarJuego.disabled = true
+}
+
+function cambiarUIJuegoTerminado() {
+    botonSiguiente.disabled = true
+    botonTerminar.disabled = true
+    botonIniciar.disabled = false
+    selectBoxIniciarJuego.disabled = false
+}
 function conseguirMazos() {
     firebase.database().ref("mazos").on("value", snap => {
         snap.forEach(element => {
             let opt = document.createElement('option');
             opt.value = element.key;
             opt.innerHTML = element.key;
-            selectBox.appendChild(opt);
+            selectBoxIniciarJuego.appendChild(opt);
         });
     });
 }
 
 function subirCarta() {
     let nombre = inputNombre.value;
-    let nombreMazo = radioMazoNuevo.checked ? inputNombreMazo.value : selectBox.value;
+    let nombreMazo = radioMazoNuevo.checked ? inputNombreMazo.value : selectBoxCrearCarta.value;
     // Upload file and metadata to the object 'images/mountains.jpg'
     let uploadTask = refernciaAlmacenaje.child('mazos/' + nombreMazo + '/' + nombre).put($('#inputImg').prop('files')[0]);
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
@@ -105,19 +147,20 @@ function subirCarta() {
 
 function iniciarJuego() {
     idJuego = firebase.database().ref().child('juegos').push().key;
-    let mazo = selectBox.value;
+    let mazo = selectBoxIniciarJuego.value;
+    let fecha = new Date().toUTCString() 
     firebase.database().ref('juegos/' + idJuego).set({
         activo: true,
         mazo: mazo,
-        key: idJuego
+        key: idJuego,
+        fecha: fecha 
     }, function (error) {
         if (error)
             mostrarAlertaError();
         else {
             mostrarAlertaExito();
-            botonSiguiente.disabled = false
-            limpiarFormulario();
             conseguirCartas(mazo);
+            cambiarUIJuegoEnProceso();
         }
     });
 }
@@ -145,6 +188,7 @@ function siguienteCarta() {
 function terminarJuego() {
     let updates = {};
     updates['juegos/' + idJuego + '/activo'] = false;
+    cambiarUIJuegoTerminado();
     return firebase.database().ref().update(updates);
 }
 
@@ -189,11 +233,11 @@ function mostrarAlertaError() {
 //Preparar opciones
 $(document).ready(function () {
     conseguirMazos();
-    selectBox.disabled = true;
+    selectBoxCrearCarta.disabled = true;
 });
 //Listener Radios
 $('input[type=radio][name=radioMazo]').change(function () {
-    selectBox.disabled = !(this.value == 'existente');
+    selectBoxCrearCarta.disabled = !(this.value == 'existente');
     inputNombreMazo.disabled = !(this.value == 'nuevo');
 });
 

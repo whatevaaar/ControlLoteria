@@ -46,96 +46,147 @@
     <!-- Card Formulario -->
     <div class="container-fluid">
         <div class="row mt-5">
-            <div class="col d-flex justify-content-center">
-                <div class="card h-100 ">
-                    <h5 class="card-header info-color white-text text-center py-4">
-                        <strong>Crear Carta</strong>
-                    </h5>
-                    <!--Card content-->
-                    <div class="card-body ">
-                        <!-- Form -->
-                        <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre de Carta"
-                                    required>
+            <div class="col  justify-content-center">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <h5 class="card-header info-color white-text text-center py-4">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <strong>Jugar</strong></button>
+                        </h5>
+                        <!--Card content-->
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <select id="opcionesMazoIniciar" class="form-control"></select>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <button type="button" id="boton-iniciar" class="btn btn-success btn-lg">Iniciar
+                                            Juego</button></div>
+                                    <div class="col">
+                                        <button type="button" id="boton-siguiente" disabled
+                                            class="btn btn-info btn-lg">Siguiente Carta</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" id="boton-terminar" disabled
+                                            class="btn btn-danger btn-lg">Terminar
+                                            Juego</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-file ">
-                                <input type="file" class="custom-file-input" id="inputImg" accept="image/*" required>
-                                <label class="custom-file-label" for="inputImg">Escoger img...</label>
-                                <div class="invalid-feedback">Tiene que ser una imagen</div>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="radioMazoNuevo" value="nuevo" name="radioMazo"
-                                    class="custom-control-input" checked>
-                                <label class="custom-control-label" for="radioMazoNuevo">Nuevo Mazo</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="radioMazoExistente" value="existente" name="radioMazo"
-                                    class="custom-control-input">
-                                <label class="custom-control-label" for="radioMazoExistente">Mazo Existente</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="inputNombreMazo" class="form-control"
-                                    placeholder="Nombre de Mazo">
-                            </div>
-                            <div class="form-group">
-                                <select id="opcionesMazo" class="form-control"></select>
-                            </div>
-                            <!-- Sign in button -->
-                            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-                                type="submit">Crear</button>
-                        </form>
-                        <!-- Form -->
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" id="boton-iniciar" class="btn btn-success btn-lg">Iniciar
-                                    Juego</button>
+                    <div class="card">
+                        <h5 class="card-header info-color white-text text-center py-4">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                <strong>Crear Carta</strong></button>
+                        </h5>
+                        <!--Card content-->
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionExample">
+                            <div class="card-body ">
+                                <!-- Form -->
+                                <form class="text-center" style="color: #757575;" onsubmit="subirCarta(); return false">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="inputNombre"
+                                            placeholder="Nombre de Carta" required>
+                                    </div>
+                                    <div class="custom-file ">
+                                        <input type="file" class="custom-file-input" id="inputImg" accept="image/*"
+                                            required>
+                                        <label class="custom-file-label" for="inputImg">Escoger img...</label>
+                                        <div class="invalid-feedback">Tiene que ser una imagen</div>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radioMazoNuevo" value="nuevo" name="radioMazo"
+                                            class="custom-control-input" checked>
+                                        <label class="custom-control-label" for="radioMazoNuevo">Nuevo Mazo</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radioMazoExistente" value="existente" name="radioMazo"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="radioMazoExistente">Mazo
+                                            Existente</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="inputNombreMazo" class="form-control"
+                                            placeholder="Nombre de Mazo">
+                                    </div>
+                                    <div class="form-group">
+                                        <select id="opcionesMazo" class="form-control"></select>
+                                    </div>
+                                    <!-- Sign in button -->
+                                    <button
+                                        class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+                                        type="submit">Crear</button>
+                                </form>
+                                <!-- Form -->
                             </div>
-                            <div class="col">
-                                <button type="button" id="boton-siguiente" disabled class="btn btn-info btn-lg">Siguiente Carta</button>
-                            </div>
-                            <div class="col">
-                                <button type="button" id="boton-terminar" class="btn btn-danger btn-lg">Terminar
-                                    Juego</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h5 class="card-header info-color white-text text-center py-4">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                <strong>Histórico</strong></button>
+                        </h5>
+                        <!--Card content-->
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#accordionExample">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <select id="opcionesHistorico" class="form-control"></select>
+                                </div>
+                                <div class="row">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">F</th>
+                                                <th scope="col">Last</th>
+                                                <th scope="col">Handle</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Card Formulario -->
-
-            <!-- Img Naipe-->
             <div class="col d-flex justify-content-center">
                 <div class="text-center naipe-fondo">
                     <img src="assets/cuerpo_tarjeta.png" class="img-fluid naipe-imagen" id="imgNaipe" alt="">
                 </div>
             </div>
         </div>
-        <!-- Row-->
-        <div class="row mt-5">
+        <!-- Card Formulario -->
 
-        </div>
-        <!-- Container-->
+        <!-- Img Naipe-->
+    </div>
+    <!-- Container-->
 
-        <!-- JavaScript -->
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-storage.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
-        <!-- Jquery First, then Popper.js, Bootstrap JS, Moment -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
-        <!-- My script -->
-        <script src="assets/scripts.js" type="text/javascript"></script>
+    <!-- JavaScript -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
+    <!-- Jquery First, then Popper.js, Bootstrap JS, Moment -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <!-- My script -->
+    <script src="assets/scripts.js" type="text/javascript"></script>
 </body>
 
 </html>
